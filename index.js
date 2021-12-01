@@ -43,7 +43,7 @@ function showSuccess(element) {
 function testDeclare(element) {
   try {
     var result = lvl1exercise1();
-    if (result !== result) {
+    if (result !== null) {
       throw false;
     }
     showSuccess(element);
@@ -55,7 +55,7 @@ function testDeclare(element) {
 function testDeclareNumber(element) {
   try {
     var result = lvl1exercise2();
-    if (!isNumber(result)) {
+    if (typeof result !== 'number') {
       throw false;
     }
     showSuccess(element);
@@ -67,7 +67,7 @@ function testDeclareNumber(element) {
 function testDeclareFloat(element) {
   try {
     var result = lvl1exercise3();
-    if (!isNumber(result) || Number.isInteger(result)) {
+    if (typeof result !== 'number' || Number.isInteger(result)) {
       throw false;
     }
     showSuccess(element);
@@ -102,11 +102,12 @@ function testDeclareArray(element) {
   }
 }
 
-// TODO: need to check that there are only two properties on the object
 function testDeclareObject(element) {
   try {
     var result = lvl1exercise6();
-    if (!(result.key1 === "Hello World!" && result.key2 === 4)) {
+    const valuesAreCorrect = result.key1 === "Hello World!" && result.key2 === 4;
+    const objectHasTwoKeys = Object.keys(result).length === 2;
+    if (!valuesAreCorrect || !objectHasTwoKeys) {
       throw false;
     }
     showSuccess(element);
@@ -129,8 +130,10 @@ function testDeclareBoolean(element) {
 
 function testAdd(element) {
   try {
-    var result = lvl2exercise1(2, 3);
-    if (result !== 5) {
+    const result1correct = lvl2exercise1(2, 3) !== 5;
+    const result2correct = lvl2exercise1(99, 1) !== 100;
+    const result3correct = lvl2exercise1(-10, 10) !== 0;
+    if (result1correct || result2correct || result3correct) {
       throw false;
     }
     showSuccess(element);
@@ -141,8 +144,10 @@ function testAdd(element) {
 
 function testSubtract(element) {
   try {
-    var result = lvl2exercise2(3, 2);
-    if (result !== 1) {
+    const result1correct = lvl2exercise2(2, 3) !== -1;
+    const result2correct = lvl2exercise2(99, 1) !== 98;
+    const result3correct = lvl2exercise2(-10, 10) !== -20;
+    if (result1correct || result2correct || result3correct) {
       throw false;
     }
     showSuccess(element);
@@ -153,8 +158,10 @@ function testSubtract(element) {
 
 function testMultiply(element) {
   try {
-    var result = lvl2exercise3(3, 2);
-    if (result !== 6) {
+    const result1correct = lvl2exercise3(2, 3) !== 6;
+    const result2correct = lvl2exercise3(99, 1) !== 99;
+    const result3correct = lvl2exercise3(-10, 10) !== -100;
+    if (result1correct || result2correct || result3correct) {
       throw false;
     }
     showSuccess(element);
@@ -165,8 +172,10 @@ function testMultiply(element) {
 
 function testDivide(element) {
   try {
-    var result = lvl2exercise4(12, 2);
-    if (result !== 6) {
+    const result1correct = lvl2exercise4(30, 3) !== 10;
+    const result2correct = lvl2exercise4(99, 1) !== 99;
+    const result3correct = lvl2exercise4(-10, 10) !== -1;
+    if (result1correct || result2correct || result3correct) {
       throw false;
     }
     showSuccess(element);
@@ -177,8 +186,10 @@ function testDivide(element) {
 
 function testAssign(element) {
   try {
-    var result = lvl2exercise5(12);
-    if (result !== 14) {
+    const result1correct = lvl2exercise5(30) !== 32;
+    const result2correct = lvl2exercise5(99) !== 101;
+    const result3correct = lvl2exercise5(-10) !== -8;
+    if (result1correct || result2correct || result3correct) {
       throw false;
     }
     showSuccess(element);
@@ -439,7 +450,15 @@ function testWhile(element) {
 function testFunction(element) {
   try {
     var result = finalFunction(8);
-    if (!Array.isArray(result) || result.length !== 8) {
+    var result2 = finalFunction(99);
+    var result3 = finalFunction(-1);
+    var result4 = finalFunction('potato');
+    if (
+      (!Array.isArray(result) || result.length !== 8) ||
+      (!Array.isArray(result2) || result2.length !== 99) ||
+      (!Array.isArray(result3) || result3.length !== 0) ||
+      (!Array.isArray(result4) || result4.length !== 0)
+    ) {
       throw false;
     }
     showSuccess(element);
